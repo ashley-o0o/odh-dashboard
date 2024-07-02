@@ -21,3 +21,9 @@ export type MenuItemStatus = {
   name: string;
   enabled: boolean;
 };
+
+export type SelectionOptions = {
+  id: number | string;
+  name: string;
+  selected?: boolean;
+};
