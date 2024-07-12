@@ -15,15 +15,3 @@ export type GroupStatus = {
   name: string;
   enabled: boolean;
 };
-
-export type MenuItemStatus = {
-  id: number;
-  name: string;
-  enabled: boolean;
-};
-
-export type SelectionOptions = {
-  id: number | string;
-  name: string;
-  selected?: boolean;
-};

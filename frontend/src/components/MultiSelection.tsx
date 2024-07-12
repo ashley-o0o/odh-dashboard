@@ -15,7 +15,12 @@ import {
   HelperTextItem,
 } from '@patternfly/react-core';
 import { TimesIcon } from '@patternfly/react-icons/dist/esm/icons/times-icon';
-import { SelectionOptions } from '~/pages/groupSettings/groupTypes';
+
+export type SelectionOptions = {
+  id: number | string;
+  name: string;
+  selected?: boolean;
+};
 
 type MultiSelectionProps = {
   value: SelectionOptions[];
