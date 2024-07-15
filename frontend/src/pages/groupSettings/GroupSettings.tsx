@@ -92,7 +92,11 @@ const GroupSettings: React.FC = () => {
           >
             <MultiSelection
               ariaLabel={adminDesc}
-              value={groupSettings.adminGroups}
+              value={groupSettings.adminGroups.map((g) => ({
+                id: g.id,
+                name: g.name,
+                selected: g.enabled,
+              }))}
               setValue={(newState) => handleMenuItemSelection(newState, GroupsConfigField.ADMIN)}
             />
             {groupSettings.errorAdmin ? (
@@ -125,7 +129,11 @@ const GroupSettings: React.FC = () => {
           >
             <MultiSelection
               ariaLabel={userDesc}
-              value={groupSettings.allowedGroups}
+              value={groupSettings.allowedGroups.map((g) => ({
+                id: g.id,
+                name: g.name,
+                selected: g.enabled,
+              }))}
               setValue={(newState) => handleMenuItemSelection(newState, GroupsConfigField.USER)}
             />
             {groupSettings.errorUser ? (

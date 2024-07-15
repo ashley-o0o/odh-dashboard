@@ -41,6 +41,7 @@ export const MultiSelection: React.FC<MultiSelectionProps> = ({ value, setValue 
     [inputValue, value],
   );
 
+  console.log(`Value: `, value);
   React.useEffect(() => {
     if (inputValue) {
       setIsOpen(true);
@@ -112,10 +113,11 @@ export const MultiSelection: React.FC<MultiSelectionProps> = ({ value, setValue 
   };
   const onSelect = (menuItem?: SelectionOptions) => {
     if (menuItem) {
+      console.log(`Selected: `, menuItem.name);
       setValue(
         selected.includes(menuItem)
-          ? value.map((option) => (option === menuItem ? { ...option, enabled: false } : option))
-          : value.map((option) => (option === menuItem ? { ...option, enabled: true } : option)),
+          ? value.map((option) => (option === menuItem ? { ...option, selected: false } : option))
+          : value.map((option) => (option === menuItem ? { ...option, selected: true } : option)),
       );
     }
     textInputRef.current?.focus();
@@ -165,7 +167,7 @@ export const MultiSelection: React.FC<MultiSelectionProps> = ({ value, setValue 
               variant="plain"
               onClick={() => {
                 setInputValue('');
-                setValue(value.map((option) => ({ ...option, enabled: false })));
+                setValue(value.map((option) => ({ ...option, selected: false })));
                 textInputRef.current?.focus();
               }}
               aria-label="Clear input value"
