@@ -87,11 +87,11 @@ export type ConnectionTypeField =
 export type ConnectionTypeConfigMap = K8sResourceCommon & {
   metadata: {
     name: string;
-    annotations: DisplayNameAnnotations & {
+    annotations?: DisplayNameAnnotations & {
       'opendatahub.io/enabled'?: 'true' | 'false';
       'opendatahub.io/username'?: string;
     };
-    labels: DashboardLabels & {
+    labels?: DashboardLabels & {
       'opendatahub.io/connection-type': 'true';
     };
   };
