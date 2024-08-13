@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Td, Tr } from '@patternfly/react-table';
+import { ActionsColumn, Td, Tr } from '@patternfly/react-table';
 import {
   Flex,
   Icon,
@@ -15,13 +15,17 @@ import { ExclamationCircleIcon } from '@patternfly/react-icons';
 import { ConnectionTypeConfigMapObj } from '~/concepts/connectionTypes/types';
 import { relativeTime } from '~/utilities/time';
 import { updateConnectionTypeEnabled } from '~/services/connectionTypesService';
+import { ConnectionTypeKind } from '~/k8sTypes';
 
 type ConnectionTypesTableRowProps = {
   obj: ConnectionTypeConfigMapObj;
   onUpdate: () => void;
+  connectionType: ConnectionTypeKind;
+  handleDelete: (cr: ConnectionTypeKind) => void;
 };
 
-const ConnectionTypesTableRow: React.FC<ConnectionTypesTableRowProps> = ({ obj, onUpdate }) => {
+
+const ConnectionTypesTableRow: React.FC<ConnectionTypesTableRowProps> = ({ obj, onUpdate, connectionType, handleDelete })=> {
   const [statusMessage, setStatusMessage] = React.useState<string | undefined>();
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>();
   const pendingEnabledState = React.useRef<'true' | 'false' | undefined>();
@@ -112,7 +116,18 @@ const ConnectionTypesTableRow: React.FC<ConnectionTypesTableRowProps> = ({ obj, 
           ) : null}
         </Flex>
       </Td>
+      <Td isActionCell>
+        <ActionsColumn
+          items={[
+            {
+              title: 'Delete',
+              onClick: () => handleDelete(connectionType),
+            },
+          ]}
+        />
+      </Td>
     </Tr>
+    
   );
 };
 

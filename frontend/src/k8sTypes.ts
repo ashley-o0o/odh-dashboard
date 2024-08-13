@@ -1279,6 +1279,22 @@ export type AcceleratorProfileKind = K8sResourceCommon & {
   };
 };
 
+export type ConnectionTypeKind = K8sResourceCommon & {
+  metadata: {
+    name: string;
+    annotations?: Partial<{
+      'opendatahub.io/modified-date': string;
+    }>;
+  };
+  spec: {
+    displayName: string;
+    enabled: boolean;
+    identifier: string;
+    description?: string;
+    tolerations?: Toleration[];
+  };
+};
+
 // In the SDK TResource extends from K8sResourceCommon, but both kind and apiVersion are mandatory
 export type K8sResourceListResult<TResource extends Partial<K8sResourceCommon>> = {
   apiVersion: string;

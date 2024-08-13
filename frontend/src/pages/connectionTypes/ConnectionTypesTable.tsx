@@ -6,18 +6,27 @@ import ConnectionTypesTableRow from '~/pages/connectionTypes/ConnectionTypesTabl
 import ConnectionTypesTableToolbar from '~/pages/connectionTypes/ConnectionTypesTableToolbar';
 import { ConnectionTypeConfigMapObj } from '~/concepts/connectionTypes/types';
 import { Table } from '~/components/table';
+import DeleteConnectionTypeModal from '~/pages/connectionTypes/DeleteConnectionTypeModal';
+import { ConnectionTypeKind } from '~/k8sTypes';
 
-interface ConnectionTypesTableProps {
+type ConnectionTypesTableProps = {
   connectionTypes: ConnectionTypeConfigMapObj[];
   onUpdate: () => void;
+  refreshConnectionTypes: () => void;
 }
+
 
 const ConnectionTypesTable: React.FC<ConnectionTypesTableProps> = ({
   connectionTypes,
   onUpdate,
+  refreshConnectionTypes,
 }) => {
   const [filterData, setFilterData] = React.useState<FilterDataType>(initialFilterData);
   const onClearFilters = React.useCallback(() => setFilterData(initialFilterData), [setFilterData]);
+
+  const [deleteConnectionType, setDeleteConnectionType] = React.useState<
+  ConnectionTypeKind | undefined
+  >();
 
   const filteredConnectionTypes = connectionTypes.filter((connectionType) => {
     const keywordFilter = filterData.Keyword?.toLowerCase();
@@ -51,6 +60,7 @@ const ConnectionTypesTable: React.FC<ConnectionTypesTableProps> = ({
   };
 
   return (
+    <>
     <Table
       variant="compact"
       data={filteredConnectionTypes}
@@ -62,7 +72,8 @@ const ConnectionTypesTable: React.FC<ConnectionTypesTableProps> = ({
           key={connectionType.metadata.name}
           obj={connectionType}
           onUpdate={onUpdate}
-        />
+          connectionType={connectionType} 
+          handleDelete={(connectionType) => setDeleteConnectionType(connectionType)}/>
       )}
       toolbarContent={
         <ConnectionTypesTableToolbar
@@ -75,6 +86,17 @@ const ConnectionTypesTable: React.FC<ConnectionTypesTableProps> = ({
       emptyTableView={<DashboardEmptyTableView onClearFilters={resetFilters} />}
       id="connectionTypes-list-table"
     />
+    <DeleteConnectionTypeModal
+        connectionType={deleteConnectionType}
+        onClose={(deleted) => {
+          if (deleted) {
+            refreshConnectionTypes();
+          }
+          setDeleteConnectionType(undefined);
+        }}
+      />
+    </>
+    
   );
 };
 

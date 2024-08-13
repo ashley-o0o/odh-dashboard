@@ -103,4 +103,10 @@ describe('Connection types', () => {
     row2.findEnableSwitch().click();
     row2.findEnableStatus().should('have.text', 'Enabling...');
   });
+
+  it.only('should delete connection type', () => {
+    connectionTypesPage.visit();
+    connectionTypesPage.shouldHaveConnectionTypes();
+
+  });
 });
