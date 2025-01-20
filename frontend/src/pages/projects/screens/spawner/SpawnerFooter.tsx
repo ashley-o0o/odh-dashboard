@@ -73,7 +73,6 @@ const SpawnerFooter: React.FC<SpawnerFooterProps> = ({
   const tolerationSettings = notebookController?.notebookTolerationSettings;
   const {
     notebooks: { data: notebooks, refresh: refreshNotebooks },
-    dataConnections: { data: existingDataConnections, refresh: refreshDataConnections },
     connections: { data: projectConnections, refresh: refreshConnections },
   } = React.useContext(ProjectDetailsContext);
   const { notebookName } = useParams();
@@ -90,7 +89,6 @@ const SpawnerFooter: React.FC<SpawnerFooterProps> = ({
   const { username } = useUser();
   const existingNotebookDataConnection = getNotebookDataConnection(
     editNotebook,
-    existingDataConnections,
   );
 
   const afterStart = (name: string, type: 'created' | 'updated') => {
@@ -123,7 +121,6 @@ const SpawnerFooter: React.FC<SpawnerFooterProps> = ({
     fireFormTrackingEvent(`Workbench ${type === 'created' ? 'Created' : 'Updated'}`, tep);
 
     refreshNotebooks();
-    refreshDataConnections();
     refreshConnections();
 
     navigate(`/projects/${projectName}?section=${ProjectSectionID.WORKBENCHES}`);

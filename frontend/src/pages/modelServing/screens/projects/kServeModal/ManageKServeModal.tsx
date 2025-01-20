@@ -38,7 +38,6 @@ import { DataConnection, NamespaceApplicationCase } from '~/pages/projects/types
 import { AwsKeys } from '~/pages/projects/dataConnections/const';
 import { isAWSValid } from '~/pages/projects/screens/spawner/spawnerUtils';
 import InferenceServiceFrameworkSection from '~/pages/modelServing/screens/projects/InferenceServiceModal/InferenceServiceFrameworkSection';
-import DataConnectionSection from '~/pages/modelServing/screens/projects/InferenceServiceModal/DataConnectionSection';
 import { getDisplayNameFromK8sResource } from '~/concepts/k8s/utils';
 import AuthServingRuntimeSection from '~/pages/modelServing/screens/projects/ServingRuntimeModal/AuthServingRuntimeSection';
 import { useAccessReview } from '~/api';
@@ -442,22 +441,12 @@ const ManageKServeModal: React.FC<ManageKServeModalProps> = ({
         </FormSection>
         {!hideForm && (
           <FormSection title="Source model location" id="model-location">
-            {isConnectionTypesEnabled ? (
               <ConnectionSection
                 data={createDataInferenceService}
                 setData={setCreateDataInferenceService}
                 setConnection={setConnection}
                 setIsConnectionValid={setIsConnectionValid}
               />
-            ) : (
-              <DataConnectionSection
-                data={createDataInferenceService}
-                setData={setCreateDataInferenceService}
-                loaded={!!projectContext?.dataConnections || dataConnectionsLoaded}
-                loadError={dataConnectionsLoadError}
-                dataConnections={dataConnections}
-              />
-            )}
           </FormSection>
         )}
         {servingRuntimeParamsEnabled && (
